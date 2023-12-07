@@ -30,8 +30,8 @@ public class PurchaseItemServiceImpl implements PurchaseItemService {
 	}
 
 	@Override
-	public void updateItem(PurchaseItem item) {
-		purchaseItemRepository.updateItem(
+	public int updateItem(PurchaseItem item) {
+		return purchaseItemRepository.updateItem(
 			item.getID(), 
 			item.getPurchaseId(), 
 			item.getProductId(), 
@@ -51,6 +51,12 @@ public class PurchaseItemServiceImpl implements PurchaseItemService {
 	public void deleteAllItemsForPurchaseId(long purchaseId) {
 		purchaseItemRepository.deleteAllItemsForPurchaseId(purchaseId);
 	}
+
+	@Override
+	public PurchaseItem createPurchaseItem(PurchaseItem purchaseItem) {
+		return purchaseItemRepository.save(purchaseItem);
+	}
+
 
 	
 

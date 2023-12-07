@@ -12,4 +12,5 @@ public interface UserServices {
     
     public int updateUser(User user);
     public List<User> getAllUsers();
+    public User createUser(User user);
 }

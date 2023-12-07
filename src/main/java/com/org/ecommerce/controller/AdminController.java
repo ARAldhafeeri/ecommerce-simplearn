@@ -58,6 +58,7 @@ public class AdminController {
 
             try {
                 String username = loginReq.getUsername();
+                System.out.println(username);
                 Admin admin = adminService.getAdminByUsername(username);
                 
                 if(admin == null) throw new Exception("incorrect username or password");
@@ -117,32 +118,37 @@ public class AdminController {
     
     }
 
-    @GetMapping("/")
+    @GetMapping("/list")
     public List<Admin> getAdmins(){
         return adminService.getAdmins();
     }
 
-    @PostMapping(path="/")
+    @PostMapping(path="/create")
     public ResponseEntity createAdmin(@RequestBody CreateAdminRequest admin){
         
-        Admin existingAdmin = adminService.getAdminByUsername(admin.getUsername());
-        ErrorRes adminExistsErr =  new ErrorRes(HttpStatus.BAD_REQUEST, "username already exists");
-        if(existingAdmin != null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(adminExistsErr);
-        
-        Admin newAdmin = new Admin();
+       try {
+            Admin existingAdmin = adminService.getAdminByUsername(admin.getUsername());
+            ErrorRes adminExistsErr =  new ErrorRes(HttpStatus.BAD_REQUEST, "username already exists");
+            if(existingAdmin != null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(adminExistsErr);
+            
+            Admin newAdmin = new Admin();
 
-        String userSalt = adminService.generateSalt();
-        String userHashedPassword = adminService.hashPassword(
-            admin.getPassword(), userSalt);
+            String userSalt = adminService.generateSalt();
+            String userHashedPassword = adminService.hashPassword(
+                admin.getPassword(), userSalt);
 
-        newAdmin.setUsername(admin.getUsername());
-        newAdmin.setEmail(admin.getEmail());
-        newAdmin.setHasedPassword(userHashedPassword);
-        newAdmin.setSalt(userSalt);
+            newAdmin.setUsername(admin.getUsername());
+            newAdmin.setEmail(admin.getEmail());
+            newAdmin.setHasedPassword(userHashedPassword);
+            newAdmin.setSalt(userSalt);
 
-        adminService.createAdmin(newAdmin);
+            adminService.createAdmin(newAdmin);
     
-        return ResponseEntity.ok(newAdmin);
+            return ResponseEntity.ok(newAdmin);
+       } catch (Exception e) {
+        ErrorRes errRes = new ErrorRes(HttpStatus.BAD_REQUEST, e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errRes);
     }
+}
 
 }

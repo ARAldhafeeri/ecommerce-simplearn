@@ -40,6 +40,8 @@ public class SecurityConfig  {
                 .requestMatchers("/user/*").permitAll()
                 .requestMatchers("/login").permitAll()
                 .requestMatchers("/admin/*").permitAll()
+                .requestMatchers("/admin/").permitAll()
+
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.headers().cacheControl();

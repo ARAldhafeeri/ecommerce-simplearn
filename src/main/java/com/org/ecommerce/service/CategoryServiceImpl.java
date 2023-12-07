@@ -48,4 +48,9 @@ public class CategoryServiceImpl implements CategoryService  {
 			return categoryRepository.updCategory(category.getID(), category.getName());
 		}
 
+		@Override
+		public Category createCategory(Category category) {
+			return categoryRepository.save(category);
+		}
+
 }

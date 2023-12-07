@@ -16,5 +16,7 @@ public interface PurchaseService {
 		public long  updatePurchase(Purchase purchase);
 		
 		public void deletePurchase(long id);
+
+		public Purchase createPurchase(Purchase purchase);
 	 
 }

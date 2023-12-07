@@ -10,7 +10,7 @@ public interface PurchaseItemService {
 		
 	public List<PurchaseItem> getAllItemsByPurchaseId(long purchaseId);
 		
-	public void updateItem(PurchaseItem item);
+	public int updateItem(PurchaseItem item);
 	
 
 	public void deleteItem(long id);
@@ -19,4 +19,5 @@ public interface PurchaseItemService {
 
 	public PurchaseItem getPurchaseItemById(long id);
 
+	public PurchaseItem createPurchaseItem(PurchaseItem purchaseItem);
 }

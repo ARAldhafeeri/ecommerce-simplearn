@@ -43,5 +43,10 @@ public class PurchaseServiceImpl implements PurchaseService {
 		public void deletePurchase(long id){
 			purchaseRepository.deletePurchase(id);
 		}
+
+		@Override
+		public Purchase createPurchase(Purchase purchase){
+			return purchaseRepository.save(purchase);
+		}
 	 
 }

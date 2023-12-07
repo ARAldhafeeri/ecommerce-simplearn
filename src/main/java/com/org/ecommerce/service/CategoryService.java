@@ -16,4 +16,6 @@ public interface CategoryService  {
 	
 	public String getCategoriesDropDown(long id);
 
+	public Category createCategory(Category category);
+
 }
