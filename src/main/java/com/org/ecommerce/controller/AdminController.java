@@ -20,6 +20,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
@@ -54,7 +55,11 @@ public class AdminController {
         }
         
         @RequestMapping(value = "/admin/login",method = RequestMethod.POST)
-        public RedirectView login(Model model, @ModelAttribute("loginRequest") LoginRequest loginReq, HttpSession session)  {
+        public RedirectView login(
+            Model model, 
+            @ModelAttribute("loginRequest") LoginRequest loginReq, 
+            HttpSession session,
+            RedirectAttributes redirectAttributes)  {
 
             try {
                 String username = loginReq.getUsername();
@@ -74,8 +79,8 @@ public class AdminController {
                 String token = jwtUtil.createToken(admin);
                 LoginRes loginRes = new LoginRes(username,token);
 
-                session.setAttribute(token, loginRes);
-
+                session.setAttribute("token", loginRes.getToken());
+                redirectAttributes.addFlashAttribute("message", "You successfully logged in");
                 return new RedirectView("/admin/dashboard");
 
             }catch (BadCredentialsException e){
@@ -92,36 +97,39 @@ public class AdminController {
         }
     
     @PostMapping("/admin/password")
-    public ResponseEntity changePassword(@RequestBody ChangePasswordRequest paswd){
-        String username = paswd.getUsername();
+    public RedirectView changePassword( 
+        Model model, 
+        @ModelAttribute("ChangePasswordRequest") ChangePasswordRequest paswd,
+        RedirectAttributes redirectAttributes) {
+            String username = paswd.getUsername();
+            Admin admin = adminService.getAdminByUsername(username);
+            redirectAttributes.addFlashAttribute("message", "No admin found with this username");
+            if(admin == null) return new RedirectView("/admin/password");
 
-        Admin admin = adminService.getAdminByUsername(username);
+            boolean isPasswordCorrect = adminService.verifyPassword(
+                paswd.getOldPassword(), 
+                admin.getSalt(), 
+                admin.getHasedPassword()
+                );
+            redirectAttributes.addFlashAttribute("message", "incorrect old password");
+            if(!isPasswordCorrect) return new RedirectView("/admin/password");
 
-        if(admin == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("admin not found");
+            String newSalt = adminService.generateSalt();
 
-        boolean isPasswordCorrect = adminService.verifyPassword(
-            paswd.getOldPassword(), 
-            admin.getSalt(), 
-            admin.getHasedPassword()
-            );
-        if(!isPasswordCorrect) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("incorrect password");
+            String newHashedPassword = adminService.hashPassword(
+                paswd.getNewPassword(), 
+                newSalt
+                );
 
-        String newSalt = adminService.generateSalt();
+            admin.setHasedPassword(newHashedPassword);
 
-        String newHashedPassword = adminService.hashPassword(
-            paswd.getNewPassword(), 
-            newSalt
-            );
+            admin.setSalt(newSalt);
 
-        admin.setHasedPassword(newHashedPassword);
-
-        admin.setSalt(newSalt);
-
-        adminService.updateAdmin(admin, admin.getId());
-
-        return ResponseEntity.ok("password changed");
-    
-    }
+            adminService.updateAdmin(admin, admin.getId());
+            redirectAttributes.addFlashAttribute("message", "password changed");
+            return new RedirectView("/admin/password");
+        
+        }
     }
 
 
@@ -169,8 +177,15 @@ public class AdminController {
         }
 
         @GetMapping("/dashboard")
-        public String homeView() {
+        public String homeView(HttpSession session, Model model) {
+            String token = (String) session.getAttribute("token");
+            System.out.println(token);
             return "dashboard";
+        }
+
+        @GetMapping("/password")
+        public String passwordView(HttpSession session, Model model) {
+            return "password";
         }
 
 

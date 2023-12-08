@@ -1,21 +1,21 @@
+<!-- src/main/resources/templates/dashboard.html -->
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 50px;
-        }
-        h2 {
-            color: #333;
-        }
-    </style>
+    <title>Dashboard</title>
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
 </head>
 <body>
-    <h2>Welcome to the Admin Panel</h2>
-    <!-- Add content as needed -->
+    <!-- Include the navbar fragment -->
+    <div th:replace="fragments/sidebar"></div>
+
+    <!-- Main content goes here -->
+    <div class="content">
+        <!-- Dashboard content goes here -->
+        <h2>Welcome to the Dashboard</h2>
+        <!-- Add your dashboard content -->
+    </div>
 </body>
 </html>
