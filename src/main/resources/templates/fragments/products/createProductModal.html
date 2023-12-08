@@ -1,0 +1,16 @@
+<!-- editModalFragment.html -->
+<div class="modal-content" th:fragment="createProductForm">
+    <button onclick="closeCreateModal()" class="closeModal">X</button>
+    <form id="createProductForm" method="POST" action="/admin/products/create">
+       <label for="productName">Name</label>
+       <input type="text" id="productName" name="name" />
+       <label for="productPrice">Price</label>
+       <input type="text" id="productPrice" name="price" />
+       <label for="productDateAdded" name>Date Added</label>
+       <input type="text" id="productDateAdded" name="dateAdded"/>
+       <label for="productCategoryId">Category ID</label>
+       <input type="text" id="productCategoryId" name="categoryId" />
+       <button type="submit">send</button>    
+    </form>    
+ </div>
+ 

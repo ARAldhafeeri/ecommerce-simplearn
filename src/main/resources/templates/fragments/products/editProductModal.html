@@ -1,0 +1,17 @@
+<!-- editModalFragment.html -->
+<div class="modal-content" th:fragment="editProductForm (productId, productName, productPrice, productDateAdded, productCategoryId)">
+   <button onclick="closeEditModal()" class="closeModal">X</button>
+   <form id="editProductForm" method="POST" action="/admin/products/edit">
+      <label for="productId">productId</label>
+      <input id="productId" name="productId" th:value="${productId}" type="text"  />
+      <label for="productName">Name</label>
+      <input type="text" id="productName" name="name" th:value="${productName}"/>
+      <label for="productPrice">Price</label>
+      <input type="text" id="productPrice" name="price" th:value="${productId}"/>
+      <label for="productDateAdded">Date Added</label>
+      <input type="text" id="productDateAdded" name="dateAdded"  th:value="${productId}"/>
+      <label for="productCategoryId">Category ID</label>
+      <input type="text" id="productCategoryId" name="categoryId" th:value="${productId}"/>
+      <button type="submit">send</button>    
+   </form>    
+</div>

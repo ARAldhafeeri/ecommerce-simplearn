@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
+    <title>Product List</title>
+</head>
+<body>
+
+<div class="content">
+    <div th:replace="fragments/sidebar"></div>
+    <h1>Product List</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Date Added</th>
+                <th>Category ID</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Display products dynamically here using server-side logic -->
+            <tr>
+                <td>1</td>
+                <td>Product 1</td>
+                <td>$19.99</td>
+                <td>2023-01-01</td>
+                <td>1</td>
+                <td>
+                    <button class="edit-btn" onclick="openEditModal()">Edit</button>
+                    <button class="delete-btn" onclick="openDeleteModal()">Delete</button>
+                </td>
+            </tr>
+            <!-- Repeat for each product -->
+        </tbody>
+    </table>
+
+    <button class="create-btn" onclick="openCreateModal()">Create</button>
+</div>
+
+<!-- Modals for actions -->
+<div id="editModal" class="modal">
+    <div th:replace="
+    fragments/products/editProductModal.html 
+    :: editProductForm(
+        productId='1', 
+        productName='1', 
+        productPrice='1', 
+        productDateAdded='1', 
+        productCategoryId='1')">
+    </div>
+</div>
+
+<div id="deleteModal" class="modal">
+    <h2>Delete Product</h2>
+    <p>Are you sure you want to delete ${productName}?</p>
+    <button onclick="">Yes</button>
+    <button onclick="closeDeleteModal()">No</button>
+</div>
+
+<div id="createModal" class="modal">
+    <div th:replace="fragments/products/createProductModal">
+    </div>
+</div>
+<script th:src="@{/js/products.js}"></script>
+</body>
+</html>

@@ -188,5 +188,16 @@ public class AdminController {
             return "password";
         }
 
+        @GetMapping("/logout")
+        public String logout(HttpSession session, Model model) {
+            session.removeAttribute("token");
+            return "login";
+        }
+
+        @GetMapping("/products")
+        public String productView(HttpSession session, Model model) {
+            return "products";
+        }
+
 
 }
