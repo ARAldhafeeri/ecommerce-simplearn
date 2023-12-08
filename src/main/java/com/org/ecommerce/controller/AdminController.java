@@ -9,6 +9,8 @@ import com.org.ecommerce.response.LoginRes;
 import com.org.ecommerce.service.AdminService;
 import com.org.ecommerce.utils.JwtUtil;
 
+import jakarta.servlet.http.HttpSession;
+
 import org.hibernate.mapping.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,15 +18,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
 
-@RestController
-@RequestMapping(path="/admin", method=RequestMethod.POST)
+@Controller
+@RequestMapping(path="/admin")
 public class AdminController {
     @Autowired
     private AdminService adminService;
@@ -38,8 +40,7 @@ public class AdminController {
     // }
 
 
-    @Controller
-    @RequestMapping("/login")
+    @RestController
     public class AuthController {
 
         private final AuthenticationManager authenticationManager;
@@ -51,10 +52,9 @@ public class AdminController {
             this.jwtUtil = jwtUtil;
 
         }
-
-        @ResponseBody
-        @RequestMapping(value = "/",method = RequestMethod.POST)
-        public ResponseEntity login(@RequestBody LoginRequest loginReq)  {
+        
+        @RequestMapping(value = "/admin/login",method = RequestMethod.POST)
+        public RedirectView login(Model model, @ModelAttribute("loginRequest") LoginRequest loginReq, HttpSession session)  {
 
             try {
                 String username = loginReq.getUsername();
@@ -74,19 +74,24 @@ public class AdminController {
                 String token = jwtUtil.createToken(admin);
                 LoginRes loginRes = new LoginRes(username,token);
 
-                return ResponseEntity.ok(loginRes);
+                session.setAttribute(token, loginRes);
+
+                return new RedirectView("/admin/dashboard");
 
             }catch (BadCredentialsException e){
-                ErrorRes errorResponse = new ErrorRes(HttpStatus.BAD_REQUEST,"Invalid username or password");
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+                System.out.println(e.getMessage());
+                return new RedirectView("/admin/login");
+
             }catch (Exception e){
-                ErrorRes errorResponse = new ErrorRes(HttpStatus.BAD_REQUEST, e.getMessage());
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+                // ErrorRes errorResponse = new ErrorRes(HttpStatus.BAD_REQUEST, e.getMessage());
+                // return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+                System.out.println(e.getMessage());
+
+                return new RedirectView("/admin/login");
             }
         }
-    }
-
-    @PostMapping("/password")
+    
+    @PostMapping("/admin/password")
     public ResponseEntity changePassword(@RequestBody ChangePasswordRequest paswd){
         String username = paswd.getUsername();
 
@@ -117,6 +122,9 @@ public class AdminController {
         return ResponseEntity.ok("password changed");
     
     }
+    }
+
+
 
     @GetMapping("/list")
     public List<Admin> getAdmins(){
@@ -149,6 +157,21 @@ public class AdminController {
         ErrorRes errRes = new ErrorRes(HttpStatus.BAD_REQUEST, e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errRes);
     }
-}
+
+ 
+    }   
+       // ui
+
+        @GetMapping("/login")
+        public String loginView(Model model) {
+            // model.addAttribute("login", adminService);
+            return "login";
+        }
+
+        @GetMapping("/dashboard")
+        public String homeView() {
+            return "dashboard";
+        }
+
 
 }
