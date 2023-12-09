@@ -200,9 +200,13 @@ public class AdminController {
 
         
         @PostMapping("/products/create")
-        public RedirectView createProduct(@RequestBody Product body,  RedirectAttributes redirectAttributes){
+        public RedirectView createProduct(@ModelAttribute("Product") Product body,  RedirectAttributes redirectAttributes){
             body.setDateAdded(new java.util.Date().toString());
-            productService.createProduct(body);
+            Product created = productService.createProduct(body);
+            if (created == null) {
+                redirectAttributes.addFlashAttribute("message", "product not created");
+                return new RedirectView("/admin/products");
+            }
             redirectAttributes.addFlashAttribute("message", "product created");
             return new RedirectView("/admin/products");
         }
