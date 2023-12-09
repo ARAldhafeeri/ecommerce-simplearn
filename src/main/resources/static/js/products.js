@@ -1,15 +1,22 @@
 // Define variables for modal elements
-const editModal = document.getElementById('editModal');
 const deleteModal = document.getElementById('deleteModal');
 const createModal = document.getElementById('createModal');
 
+const product = {
+    name: '',
+    price: '',
+    dateAdded: '',
+    categoryId: ''
+}
 // Function to open the edit modal
-function openEditModal() {
+function openEditModal(id) {
+   let editModal = document.querySelector(`[dataid='${id}']`);
     editModal.style.display = 'block';
 }
 
 // Function to close the edit modal
-function closeEditModal() {
+function closeEditModal(id) {
+    let editModal = document.querySelector(`[dataid='${id}']`);
     editModal.style.display = 'none';
 }
 

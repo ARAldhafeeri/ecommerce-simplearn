@@ -1,12 +1,14 @@
 package com.org.ecommerce.controller;
 
 import com.org.ecommerce.modal.Admin;
+import com.org.ecommerce.modal.Product;
 import com.org.ecommerce.requests.ChangePasswordRequest;
 import com.org.ecommerce.requests.CreateAdminRequest;
 import com.org.ecommerce.requests.LoginRequest;
 import com.org.ecommerce.response.ErrorRes;
 import com.org.ecommerce.response.LoginRes;
 import com.org.ecommerce.service.AdminService;
+import com.org.ecommerce.service.ProductService;
 import com.org.ecommerce.utils.JwtUtil;
 
 import jakarta.servlet.http.HttpSession;
@@ -32,14 +34,8 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
-    // @PostMapping("/login")
-    // public String login(@Valid @RequestBody LoginRequest request){
-    //     Admin admin = adminService.getAdminByUsername(request.getUsername());
-    //     if(admin == null) return "admin not found";
-
-    //     return adminService.getAdminByUsername(request.getUsername()).getUsername();
-    // }
-
+    @Autowired
+    private ProductService productService;
 
     @RestController
     public class AuthController {
@@ -194,10 +190,45 @@ public class AdminController {
             return "login";
         }
 
+        // products 
+
         @GetMapping("/products")
         public String productView(HttpSession session, Model model) {
+            model.addAttribute("products", productService.getAllProducts());
             return "products";
         }
+
+        
+        @PostMapping("/products/create")
+        public RedirectView createProduct(@RequestBody Product body,  RedirectAttributes redirectAttributes){
+            body.setDateAdded(new java.util.Date().toString());
+            productService.createProduct(body);
+            redirectAttributes.addFlashAttribute("message", "product created");
+            return new RedirectView("/admin/products");
+        }
+
+        @PostMapping("/products/update")
+        public RedirectView updateProduct(@ModelAttribute("Product") Product body,  RedirectAttributes redirectAttributes){
+
+            try {
+                 System.out.println(body.getName());
+                 productService.updateProduct(body);
+            } catch (Exception e) {
+                redirectAttributes.addFlashAttribute("message", e.getMessage());
+                return new RedirectView("/admin/products");
+            }
+            redirectAttributes.addFlashAttribute("message", "product updated");
+            return new RedirectView("/admin/products");
+        }
+
+
+        @PostMapping("/products/delete:productID")
+        public RedirectView deleteProduct(@RequestParam String productID,  RedirectAttributes redirectAttributes){
+            productService.deleteProduct(Long.parseLong(productID));
+            redirectAttributes.addFlashAttribute("message", "password deleted");
+            return new RedirectView("/admin/products");
+        }
+
 
 
 }

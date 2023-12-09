@@ -20,7 +20,7 @@ public class Product {
 	private BigDecimal price;
 	
 	@Column(name = "dateAdded")
-	private Date dateAdded;  
+	private String dateAdded;  
 
 	@Column(name = "categoryId")
 	private long categoryId;  
@@ -30,12 +30,12 @@ public class Product {
 	public String getName() { return this.name;} 
 	public BigDecimal getPrice() { return this.price;} 
 	public long getCategoryId() { return this.categoryId;}
-	public Date getDateAdded() { return this.dateAdded;}
+	public String getDateAdded() { return this.dateAdded;}
 
 	
 	public void setID(long id) { this.id = id;}
 	public void setName(String value) { this.name = value;}
 	public void setPrice(BigDecimal value) { this.price = value;}
 	public void setCategoryId(long value) { this.categoryId = value;}
-	public void setDateAdded(Date date) { this.dateAdded = date;}
+	public void setDateAdded(String date) { this.dateAdded = date;}
 }

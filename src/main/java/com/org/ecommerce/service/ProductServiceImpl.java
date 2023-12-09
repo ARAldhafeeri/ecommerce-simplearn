@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.org.ecommerce.modal.Product;
 import com.org.ecommerce.repository.ProductRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -20,6 +22,7 @@ public class ProductServiceImpl implements ProductService {
 		}
 		
 		@Override
+		@Transactional
 		public int updateProduct(Product product){
 			return productRepository.updateProduct(
 				product.getID(),

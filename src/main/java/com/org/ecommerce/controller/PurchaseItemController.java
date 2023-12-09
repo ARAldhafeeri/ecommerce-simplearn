@@ -14,7 +14,7 @@ import com.org.ecommerce.modal.User;
 import com.org.ecommerce.service.PurchaseItemService;
 import com.org.ecommerce.service.UserServices;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/PurchaseItem")
