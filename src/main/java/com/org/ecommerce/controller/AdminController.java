@@ -12,6 +12,8 @@ import com.org.ecommerce.service.AdminService;
 import com.org.ecommerce.service.CategoryService;
 import com.org.ecommerce.service.ProductService;
 import com.org.ecommerce.service.ProductServiceImpl;
+import com.org.ecommerce.service.PurchaseService;
+import com.org.ecommerce.service.UserServices;
 import com.org.ecommerce.utils.JwtUtil;
 
 import jakarta.servlet.http.HttpSession;
@@ -42,6 +44,12 @@ public class AdminController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private UserServices userServices;
+
+    @Autowired
+    private PurchaseService purchasesService;
 
     @RestController
     public class AuthController {
@@ -278,5 +286,19 @@ public class AdminController {
             categoryService.deleteCategory(id);
             redirectAttributes.addFlashAttribute("message", "category deleted");
             return new RedirectView("/admin/categories");
+        }
+
+        // users 
+        @GetMapping("/users")
+        public String userView(HttpSession session, Model model) {
+            model.addAttribute("users", userServices.getAllUsers());
+            return "users";
+        }
+
+        // purchases
+        @GetMapping("/purchases")
+        public String purchaseView(HttpSession session, Model model) {
+            model.addAttribute("purchases", purchasesService.getAllItems());
+            return "purchases";
         }
 }

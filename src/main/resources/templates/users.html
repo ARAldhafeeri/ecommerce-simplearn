@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
+    <title>Category List</title>
+</head>
+<body>
+
+<div class="content">
+    <div th:replace="~{fragments/sidebar}"></div>
+    <h1>Users List</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>username</th>
+                <th>email</th>
+                <th>age</th>
+                <th>Date Added</th>
+                <th>address</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Display categorys dynamically here using server-side logic -->
+            <tr th:each="u : ${users}">
+                <td th:text="${u.name}"></td>
+                <td th:text="${u.emailid}"></td>
+                <td th:text="${u.age}"></td>
+                <td th:text="${u.date}"></td>
+                <td th:text="${u.address}"></td>
+        
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

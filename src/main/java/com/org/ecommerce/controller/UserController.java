@@ -33,18 +33,6 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<User> create(User user){
-        User newUser = userServices.createUser(user);
-        return ResponseEntity.ok(newUser);
-    }
-
-    @PostMapping("/update")
-    public ResponseEntity<Integer> update(@RequestBody User user){
-        int updatedUser = userServices.updateUser(user);
-        return ResponseEntity.ok(updatedUser);
-    }
-
 
     @PostMapping("/changePassword")
     public ResponseEntity<Integer> changePassword(@RequestBody User user){
@@ -62,6 +50,21 @@ public class UserController {
     public ResponseEntity<User> getUserById(long id){
         User user = userServices.getUserById(id);
         return ResponseEntity.ok(user);
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<User> register(@RequestBody User user){
+        User registeredUser = userServices.createUser(user);
+        return ResponseEntity.ok(registeredUser);
+    }
+
+    @Controller
+    public class UI {
+
+        @GetMapping("/login")
+        public String login() {
+            return "login";
+        }
     }
     
 }
