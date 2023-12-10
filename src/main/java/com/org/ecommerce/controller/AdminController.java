@@ -8,6 +8,7 @@ import com.org.ecommerce.requests.LoginRequest;
 import com.org.ecommerce.response.ErrorRes;
 import com.org.ecommerce.response.LoginRes;
 import com.org.ecommerce.service.AdminService;
+import com.org.ecommerce.service.CategoryService;
 import com.org.ecommerce.service.ProductService;
 import com.org.ecommerce.service.ProductServiceImpl;
 import com.org.ecommerce.utils.JwtUtil;
@@ -37,6 +38,9 @@ public class AdminController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private CategoryService categoryService;
 
     @RestController
     public class AuthController {
@@ -195,6 +199,7 @@ public class AdminController {
 
         @GetMapping("/products")
         public String productView(HttpSession session, Model model) {
+            model.addAttribute("catogry", categoryService.getCategoriesDropDown());
             model.addAttribute("products", productService.getAllProducts());
             return "products";
         }

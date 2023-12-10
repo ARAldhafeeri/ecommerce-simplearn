@@ -14,7 +14,7 @@ public interface CategoryService  {
 
 	public List<Category> getAllCategories();
 	
-	public String getCategoriesDropDown(long id);
+	public String getCategoriesDropDown();
 
 	public Category createCategory(Category category);
 

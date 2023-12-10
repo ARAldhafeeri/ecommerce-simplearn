@@ -30,15 +30,11 @@ public class CategoryServiceImpl implements CategoryService  {
 			}
 			
 		@Override
-		public String getCategoriesDropDown(long id) {
+		public String getCategoriesDropDown() {
 			StringBuilder sb = new StringBuilder("");
 			List<Category> list = categoryRepository.findAll();
 			for(Category cat: list) {
-				if (cat.getID() == id)
-					sb.append("<option value=" + String.valueOf(cat.getID()) + " selected>" + cat.getName() + "</option>");
-				else
-					sb.append("<option value=" + String.valueOf(cat.getID()) + ">" + cat.getName() + "</option>");
-					
+				sb.append("<option value=" + String.valueOf(cat.getID()) + ">" + cat.getName() + "</option>");
 			}
 			return sb.toString();
 			}

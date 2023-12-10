@@ -62,7 +62,7 @@
 </div>
 
 <div id="createModal" class="modal">
-    <div th:replace="~{fragments/products/createProductModal}">
+    <div th:replace="~{fragments/products/createProductModal(category=${category})}">
     </div>
 </div>
 <script th:src="@{/js/products.js}"></script>
