@@ -1,5 +1,3 @@
-// Define variables for modal elements
-const deleteModal = document.getElementById('deleteModal');
 const createModal = document.getElementById('createModal');
 
 const product = {
@@ -21,12 +19,14 @@ function closeEditModal(id) {
 }
 
 // Function to open the delete modal
-function openDeleteModal() {
+function openDeleteModal(id) {
+    let deleteModal = document.querySelector(`[dataid-delete='${id}']`);
     deleteModal.style.display = 'block';
 }
 
 // Function to close the delete modal
-function closeDeleteModal() {
+function closeDeleteModal(id) {
+    let deleteModal = document.querySelector(`[dataid-delete='${id}']`);
     deleteModal.style.display = 'none';
 }
 

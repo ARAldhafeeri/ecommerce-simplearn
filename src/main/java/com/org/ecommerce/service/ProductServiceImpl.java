@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.org.ecommerce.modal.Product;
 import com.org.ecommerce.repository.ProductRepository;
 
-import jakarta.transaction.Transactional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -17,25 +17,26 @@ public class ProductServiceImpl implements ProductService {
 	ProductRepository productRepository;
 
 		@Override	
-		public Product getProductById(long id) {
+		public Product getProductById(Long id) {
 			return productRepository.getProductById(id);
 		}
 		
 		@Override
 		@Transactional
-		public int updateProduct(Product product){
-			return productRepository.updateProduct(
+		public void updateProduct(Product product){
+			productRepository.updateProduct(
 				product.getID(),
 				product.getName(),
 				product.getPrice(),
 				product.getDateAdded(),
 				product.getCategoryId()
 			);
+
 		}
 		
 		@Override
-		public int deleteProduct(long id){
-			return productRepository.deleteProduct(id);
+		public void deleteProduct(Long id){
+			productRepository.deleteProduct(id);
 		}
 
 		@Override

@@ -9,7 +9,7 @@
 <body>
 
 <div class="content">
-    <div th:replace="fragments/sidebar"></div>
+    <div th:replace="~{fragments/sidebar}"></div>
     <h1>Product List</h1>
     
     <table>
@@ -31,18 +31,26 @@
                 <td th:text="${p.categoryId}"></td>
                 <td>
                     <button class="edit-btn" th:data-name="${p.getID()}" th:onclick="openEditModal(this.getAttribute('data-name'))">Edit</button>
-                    <button class="delete-btn" onclick="openDeleteModal()">Delete</button>
+                    <button class="delete-btn" th:data-name="${p.getID()}" th:onclick="openDeleteModal(this.getAttribute('data-name'))">Delete</button>
                 </td>
                 <!-- Modals for actions -->
                 <div th:attr="dataId=${p.getID()}" class="modal">
                     <div th:replace="
-                    fragments/products/editProductModal.html 
+                    ~{fragments/products/editProductModal 
                     :: editProductForm(
                         productId=${p.getID()},
                         productName=${p.name}, 
                         productPrice=${p.price}, 
                         productDateAdded=${p.dateAdded}, 
-                        productCategoryId=${p.categoryId})">
+                        productCategoryId=${p.categoryId})}">
+                    </div>
+                </div>
+                <div th:attr="dataid-delete=${p.getID()}" class="modal">
+                    <div th:replace="
+                    ~{fragments/products/deleteProductModal
+                    :: deleteProductModal(
+                        productId=${p.getID()},
+                        productName=${p.name} )}">
                     </div>
                 </div>
             </tr>
@@ -53,15 +61,8 @@
     <button class="create-btn" onclick="openCreateModal()">Create</button>
 </div>
 
-<div id="deleteModal" class="modal">
-    <h2>Delete Product</h2>
-    <p>Are you sure you want to delete ${productName}?</p>
-    <button onclick="">Yes</button>
-    <button onclick="closeDeleteModal()">No</button>
-</div>
-
 <div id="createModal" class="modal">
-    <div th:replace="fragments/products/createProductModal">
+    <div th:replace="~{fragments/products/createProductModal}">
     </div>
 </div>
 <script th:src="@{/js/products.js}"></script>

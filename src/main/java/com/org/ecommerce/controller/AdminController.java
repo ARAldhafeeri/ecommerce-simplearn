@@ -9,6 +9,7 @@ import com.org.ecommerce.response.ErrorRes;
 import com.org.ecommerce.response.LoginRes;
 import com.org.ecommerce.service.AdminService;
 import com.org.ecommerce.service.ProductService;
+import com.org.ecommerce.service.ProductServiceImpl;
 import com.org.ecommerce.utils.JwtUtil;
 
 import jakarta.servlet.http.HttpSession;
@@ -212,23 +213,22 @@ public class AdminController {
         }
 
         @PostMapping("/products/update")
-        public RedirectView updateProduct(@ModelAttribute("Product") Product body,  RedirectAttributes redirectAttributes){
+        public RedirectView updateProduct(
+            @ModelAttribute("Product") Product body,
+            RedirectAttributes redirectAttributes, 
+            @RequestParam Long id){
 
-            try {
-                 System.out.println(body.getName());
-                 productService.updateProduct(body);
-            } catch (Exception e) {
-                redirectAttributes.addFlashAttribute("message", e.getMessage());
-                return new RedirectView("/admin/products");
-            }
+            body.setID(id);
+
+            productService.updateProduct(body);
             redirectAttributes.addFlashAttribute("message", "product updated");
             return new RedirectView("/admin/products");
         }
 
 
-        @PostMapping("/products/delete:productID")
-        public RedirectView deleteProduct(@RequestParam String productID,  RedirectAttributes redirectAttributes){
-            productService.deleteProduct(Long.parseLong(productID));
+        @PostMapping("/products/delete")
+        public RedirectView deleteProduct(@RequestParam Long id, RedirectAttributes redirectAttributes){
+            productService.deleteProduct(id);
             redirectAttributes.addFlashAttribute("message", "password deleted");
             return new RedirectView("/admin/products");
         }

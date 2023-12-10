@@ -3,6 +3,8 @@ package com.org.ecommerce.service;
 import com.org.ecommerce.modal.Admin;
 import com.org.ecommerce.repository.AdminRepository;
 
+import jakarta.transaction.Transactional;
+
 import org.apache.commons.lang3.CharSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,6 +22,7 @@ import java.util.List;
 import java.util.Random;
 
 @Service
+@Transactional
 public class AdminServiceImpl implements AdminService {
 
     @Autowired

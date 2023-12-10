@@ -1,0 +1,9 @@
+<div class="modal-content" th:fragment="deleteProductModal (productId, productName)">
+        <h2>Delete Product</h2>
+        <p>Are you sure you want to delete <b th:text="${productName}"></b></p>
+        <form id="deleteProductForm" method="POST" action="/admin/products/delete">
+            <input type="hidden" id="productId" name="id" th:value="${productId}"/>
+            <button type="submit">Yes</button>
+        </form>
+        <button onclick="closeDeleteModal()">No</button>
+</div>

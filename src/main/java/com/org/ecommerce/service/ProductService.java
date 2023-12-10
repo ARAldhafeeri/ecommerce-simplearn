@@ -6,13 +6,13 @@ import com.org.ecommerce.modal.Product;
 
 public interface ProductService {
 
-		public Product getProductById(long id);
+		public Product getProductById(Long id);
 		
 		
-		public int updateProduct(Product product);
+		public void updateProduct(Product product);
 		
 
-		public int deleteProduct(long id);
+		public void deleteProduct(Long id);
 
 		public List<Product> getAllProducts();
 
