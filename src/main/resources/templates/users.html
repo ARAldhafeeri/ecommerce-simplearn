@@ -11,11 +11,30 @@
 <div class="content">
     <div th:replace="~{fragments/sidebar}"></div>
     <h1>Users List</h1>
+    <input type="text" id="searchInput" placeholder="Search users">
+    <script th:inline="javascript">
+        // JavaScript for client-side search functionality
+        document.getElementById('searchInput').addEventListener('input', function() {
+            var searchValue = this.value.toLowerCase();
     
+            // Loop through each row in the table
+            var tableRows = document.querySelectorAll('tbody tr');
+            tableRows.forEach(function(row) {
+                var rowData = row.textContent.toLowerCase();
+                // If the row contains the search value, display it; otherwise, hide it
+                if (rowData.includes(searchValue)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    </script>
     <table>
         <thead>
             <tr>
-                <th>username</th>
+                <th>First name</th>
+                <th>Last name</th>
                 <th>email</th>
                 <th>age</th>
                 <th>Date Added</th>
@@ -26,11 +45,12 @@
         <tbody>
             <!-- Display categorys dynamically here using server-side logic -->
             <tr th:each="u : ${users}">
-                <td th:text="${u.name}"></td>
-                <td th:text="${u.emailid}"></td>
-                <td th:text="${u.age}"></td>
-                <td th:text="${u.date}"></td>
-                <td th:text="${u.address}"></td>
+                <td th:text="${u.getFname()}"></td>
+                <td th:text="${u.getLname()}"></td>
+                <td th:text="${u.getEmail()}"></td>
+                <td th:text="${u.getAge()}"></td>
+                <td th:text="${u.dateAdded}"></td>
+                <td th:text="${u.getAddress()}"></td>
         
         </tbody>
     </table>
