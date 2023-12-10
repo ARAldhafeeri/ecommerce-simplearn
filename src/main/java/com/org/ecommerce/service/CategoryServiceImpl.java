@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.org.ecommerce.modal.Category;
 import com.org.ecommerce.repository.CategoryRepository;
@@ -40,6 +41,7 @@ public class CategoryServiceImpl implements CategoryService  {
 			}
 
 		@Override
+		@Transactional
 		public int updateCategory(Category category) {
 			return categoryRepository.updCategory(category.getID(), category.getName());
 		}

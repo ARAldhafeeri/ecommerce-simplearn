@@ -1,0 +1,10 @@
+<!-- editModalFragment.html -->
+<div class="modal-content" th:fragment="createCategoryForm">
+    <button onclick="closeCreateModal()" class="closeModal">X</button>
+    <form id="createCategoryForm" method="POST" action="/admin/categories/create">
+       <label for="categoryName">Name</label>
+       <input type="text" id="categoryName" name="name" />
+      <button type="submit">send</button>    
+    </form>    
+ </div>
+ 

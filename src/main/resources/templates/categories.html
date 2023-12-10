@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
+    <title>Category List</title>
+</head>
+<body>
+
+<div class="content">
+    <div th:replace="~{fragments/sidebar}"></div>
+    <h1>Category List</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Display categorys dynamically here using server-side logic -->
+            <tr th:each="p : ${categories}">
+                <td th:text="${p.name}"></td>
+                <td>
+                    <button class="edit-btn" th:data-name="${p.getID()}" th:onclick="openEditModal(this.getAttribute('data-name'))">Edit</button>
+                    <button class="delete-btn" th:data-name="${p.getID()}" th:onclick="openDeleteModal(this.getAttribute('data-name'))">Delete</button>
+                </td>
+                <!-- Modals for actions -->
+                <div th:attr="dataId=${p.getID()}" class="modal">
+                    <div th:replace="
+                    ~{fragments/categories/editCategoryModal 
+                    :: editCategoryForm(
+                        categoryId=${p.getID()},
+                        categoryName=${p.name})}">
+                    </div>
+                </div>
+                <div th:attr="dataid-delete=${p.getID()}" class="modal">
+                    <div th:replace="
+                    ~{fragments/categories/deleteCategoryModal
+                    :: deleteCategoryModal(
+                        categoryId=${p.getID()},
+                        categoryName=${p.name} )}">
+                    </div>
+                </div>
+            </tr>
+            <!-- Repeat for each category -->
+        </tbody>
+    </table>
+
+    <button class="create-btn" onclick="openCreateModal()">Create</button>
+</div>
+
+<div id="createModal" class="modal">
+    <div th:replace="~{fragments/categories/createCategoryModal}">
+    </div>
+</div>
+<script th:src="@{/js/modal.js}"></script>
+</body>
+</html>

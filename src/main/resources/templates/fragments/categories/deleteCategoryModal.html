@@ -1,0 +1,9 @@
+<div class="modal-content" th:fragment="deleteCategoryModal (categoryId, categoryName)">
+        <h2>Delete Category</h2>
+        <p>Are you sure you want to delete <b th:text="${categoryName}"></b></p>
+        <form id="deleteCategoryForm" method="POST" action="/admin/categories/delete">
+            <input type="hidden" id="categoryId" name="id" th:value="${categoryId}"/>
+            <button type="submit">Yes</button>
+        </form>
+        <button onclick="closeDeleteModal()">No</button>
+</div>

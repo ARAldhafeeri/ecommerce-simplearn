@@ -1,6 +1,7 @@
 package com.org.ecommerce.controller;
 
 import com.org.ecommerce.modal.Admin;
+import com.org.ecommerce.modal.Category;
 import com.org.ecommerce.modal.Product;
 import com.org.ecommerce.requests.ChangePasswordRequest;
 import com.org.ecommerce.requests.CreateAdminRequest;
@@ -239,5 +240,43 @@ public class AdminController {
         }
 
 
+        // categories
+        
+        @GetMapping("/categories")
+        public String categoryView(HttpSession session, Model model) {
+            model.addAttribute("categories", categoryService.getAllCategories());
+            return "categories";
+        }
 
+        @PostMapping("/categories/create")
+        public RedirectView createCategory(@ModelAttribute("Category") Category body,  RedirectAttributes redirectAttributes){
+
+            com.org.ecommerce.modal.Category created = categoryService.createCategory(body);
+            if (created == null) {
+                redirectAttributes.addFlashAttribute("message", "category not created");
+                return new RedirectView("/admin/categories");
+            }
+            redirectAttributes.addFlashAttribute("message", "category created");
+            return new RedirectView("/admin/categories");
+        }
+
+        @PostMapping("/categories/update")
+        public RedirectView updateCategory(
+            @ModelAttribute("Category") Category body,
+            RedirectAttributes redirectAttributes, 
+            @RequestParam Long id){
+
+            body.setID(id);
+
+            categoryService.updateCategory(body);
+            redirectAttributes.addFlashAttribute("message", "category updated");
+            return new RedirectView("/admin/categories");
+        }
+
+        @PostMapping("/categories/delete")
+        public RedirectView deleteCategory(@RequestParam Long id, RedirectAttributes redirectAttributes){
+            categoryService.deleteCategory(id);
+            redirectAttributes.addFlashAttribute("message", "category deleted");
+            return new RedirectView("/admin/categories");
+        }
 }

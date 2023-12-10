@@ -30,31 +30,6 @@ public class CategoryController {
         return ResponseEntity.ok(res);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Category> create(Category body){
-        Category res = service.createCategory(body);
-        return ResponseEntity.ok(res);
-    }
-
-    @PostMapping("/update")
-    public ResponseEntity<Integer> update(@RequestBody Category body){
-        int res = service.updateCategory(body);
-        return ResponseEntity.ok(res);
-    }
-
-
-    @PostMapping("/delete")
-    public ResponseEntity<String> delete(@RequestBody Category body){
-        service.deleteCategory(body.getID());
-        return ResponseEntity.ok("ok");
-    }
-
-    @GetMapping("/listDropDown")
-    public ResponseEntity<String> getDropDown(long id){
-        String res = service.getCategoriesDropDown(id);
-        return ResponseEntity.ok(res);
-    }
-
     @GetMapping("/getCategoryById")
     public ResponseEntity<Category> getCategoryById(long id){
         Category res = service.getCategoryById(id);

@@ -1,0 +1,11 @@
+<!-- editModalFragment.html -->
+<div class="modal-content" th:fragment="editCategoryForm (categoryId, categoryName)">
+   <button th:data-name="${p.getID()}" th:onclick="closeEditModal(this.getAttribute('data-name'))" class="closeModal">X</button>
+   <form id="editCategoryForm" method="POST" action="/admin/categories/update">
+      <label for="CategoryId">ID</label>
+      <input type="hidden" id="categoryId" name="id" th:value="${categoryId}"/>
+      <label for="CategoryName">Name</label>
+      <input type="text" id="categoryName" name="name" th:value="${categoryName}"/>
+      <button type="submit">send</button>    
+   </form>    
+</div>
