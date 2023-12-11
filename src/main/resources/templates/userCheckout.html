@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
+</head>
+<body>
+    <!-- Include the navbar fragment -->
+    <div th:replace="fragments/topbarHome"></div>
+    <div class="content">
+        <div class="card-container">
+            <!-- Iterate over the list of products -->
+            <div th:each="product : ${products}">
+                <div class="card">
+                    <!-- Product Name -->
+                    <h3 th:text="${product.productId}"></h3>
+                    <!-- Product Price -->
+                    <p th:text="'Qty: ' + ${product.qty}"></p>
+                </div>
+            </div>
+        </div>
+        <div>
+            <p th:text="'Total: ' + ${total}"></p>
+        </div>
+        <form method="post" th:action="@{/user/checkout}">
+            <input type="hidden" th:name="userId" th:value="1" />
+            <input type="hidden" th:name="total" th:value="${total}" />
+            <button type="submit">Checkout</button>
+        </form>
+    </div>
+</body>
+</html>

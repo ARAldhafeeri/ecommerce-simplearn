@@ -26,7 +26,7 @@
         <tbody>
             <!-- Display categories dynamically here using server-side logic -->
             <tr th:each="p : ${purchases}" class="purchaseRow">
-                <td th:text="${p.purchaserid}"></td>
+                <td th:text="${p.userId}"></td>
                 <td th:text="${p.date}"></td>
                 <td th:text="${p.total}"></td>
             </tr>

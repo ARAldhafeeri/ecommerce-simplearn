@@ -17,7 +17,7 @@ public class Purchase {
 	private long userId;
 	
 	@Column(name = "date")
-	private Date date;
+	private String date;
 	
 	@Column(name = "total")
 	private BigDecimal total;
@@ -26,10 +26,10 @@ public class Purchase {
 	public long getID() {return this.id; }
 	public long getUserId() { return this.userId;}
 	public BigDecimal getTotal() { return this.total;}
-	public Date getDate() { return this.date;}
+	public String getDate() { return this.date;}
 	
 	public void setID(long id) { this.id = id;}
 	public void setUserId(long value) { this.userId = value;}
 	public void setTotal(BigDecimal value) { this.total = value;}
-	public void setDate(Date date) { this.date = date;}   
+	public void setDate(String date) { this.date = date;}   
 }

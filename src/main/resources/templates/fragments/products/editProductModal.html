@@ -1,5 +1,5 @@
 <!-- editModalFragment.html -->
-<div class="modal-content" th:fragment="editProductForm (productId, productName, productPrice, productDateAdded, productCategoryId)">
+<div class="modal-content" th:fragment="editProductForm (productId, productName, productPrice, productDateAdded, productCategoryId, categories)">
    <button th:data-name="${p.getID()}" th:onclick="closeEditModal(this.getAttribute('data-name'))" class="closeModal">X</button>
    <form id="editProductForm" method="POST" action="/admin/products/update">
       <label for="productId">ID</label>
@@ -11,7 +11,7 @@
       <label for="productDateAdded">Date Added</label>
       <input type="text" id="productDateAdded" name="dateAdded"  th:value="${productDateAdded}"/>
       <label for="productCategoryId">Category ID</label>
-      <input type="text" id="productCategoryId" name="categoryId" th:value="${productCategoryId}"/>
+      <select id="category" name="categoryId" th:utext="${categories}"></select>
       <button type="submit">send</button>    
    </form>    
 </div>

@@ -46,7 +46,7 @@ public class PurchaseItemController {
 
     @GetMapping("/getAllItemsByPurchaseId")
     public ResponseEntity<List<PurchaseItem>> getByUserId(long userId){
-        List<PurchaseItem> res = service.getAllItemsByPurchaseId(userId);
+        List<PurchaseItem> res = service.getAllItemsByPurchaserId(userId);
         return ResponseEntity.ok(res);
     }
 

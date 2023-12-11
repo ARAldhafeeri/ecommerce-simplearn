@@ -208,6 +208,7 @@ public class AdminController {
 
         @GetMapping("/products")
         public String productView(HttpSession session, Model model) {
+            System.out.println(categoryService.getCategoriesDropDown());
             model.addAttribute("catogry", categoryService.getCategoriesDropDown());
             model.addAttribute("products", productService.getAllProducts());
             return "products";

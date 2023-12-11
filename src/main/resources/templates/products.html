@@ -42,7 +42,8 @@
                         productName=${p.name}, 
                         productPrice=${p.price}, 
                         productDateAdded=${p.dateAdded}, 
-                        productCategoryId=${p.categoryId})}">
+                        productCategoryId=${p.categoryId},
+                        categories=${catogry})}">
                     </div>
                 </div>
                 <div th:attr="dataid-delete=${p.getID()}" class="modal">
@@ -62,9 +63,9 @@
 </div>
 
 <div id="createModal" class="modal">
-    <div th:replace="~{fragments/products/createProductModal(category=${category})}">
+    <div th:replace="~{fragments/products/createProductModal(category=${catogry})}">
     </div>
 </div>
-<script th:src="@{/js/products.js}"></script>
+<script th:src="@{/js/modal.js}"></script>
 </body>
 </html>

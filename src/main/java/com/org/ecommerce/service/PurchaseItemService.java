@@ -8,7 +8,7 @@ public interface PurchaseItemService {
 
 	public PurchaseItem getItemById(long id);
 		
-	public List<PurchaseItem> getAllItemsByPurchaseId(long purchaseId);
+	public List<PurchaseItem> getAllItemsByPurchaserId(long purchaseId);
 		
 	public int updateItem(PurchaseItem item);
 	

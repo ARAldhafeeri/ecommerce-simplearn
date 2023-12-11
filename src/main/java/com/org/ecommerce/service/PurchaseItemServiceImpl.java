@@ -25,8 +25,8 @@ public class PurchaseItemServiceImpl implements PurchaseItemService {
 	}
 
 	@Override
-	public List<PurchaseItem> getAllItemsByPurchaseId(long id) {
-		return purchaseItemRepository.getAllItemsByPurchaseId(id);
+	public List<PurchaseItem> getAllItemsByPurchaserId(long id) {
+		return purchaseItemRepository.getAllItemsByPurchaserId(id);
 	}
 
 	@Override
