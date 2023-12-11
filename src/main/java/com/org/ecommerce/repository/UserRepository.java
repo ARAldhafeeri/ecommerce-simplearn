@@ -13,18 +13,19 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-    @Query("SELECT u FROM User AS u WHERE u.emailId = :emailId and u.pwd = :pwd")
+    @Query("SELECT u FROM User u WHERE u.emailId = :emailId and u.pwd = :pwd")
 	User authenticate(@Param("emailId") String emailId, @Param("pwd") String pwd);
 
-	@Query("SELECT u FROM User AS u WHERE u.id = :id")
+	@Query("SELECT u FROM User u WHERE u.id = :id")
 	User getUserById(long id);
 
 
-    @Query("SELECT u FROM User AS u WHERE u.emailId = :emailId")
+    @Query("SELECT u FROM User u WHERE u.emailId = :emailId")
 	User getUserByEmailId(@Param("emailId") String emailId);
 
+	@Modifying
 	@Query(
-		value ="UPDATE User AS u SET u.fname = :fname, u.lname = :lname, u.address = :address, u.age = :age, u.dateAdded = :dateAdded, u.emailId = :emailId, u.pwd = :pwd WHERE u.ID = :ID",
+		value ="UPDATE User u SET u.fname = :fname, u.lname = :lname, u.address = :address, u.age = :age, u.dateAdded = :dateAdded, u.emailId = :emailId, u.pwd = :pwd WHERE u.ID = :ID",
 		nativeQuery = true)
 	int updatUser(
 		@Param("ID") long id,

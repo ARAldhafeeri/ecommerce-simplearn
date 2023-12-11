@@ -15,8 +15,8 @@ public class UserServicesImpl implements UserServices {
     UserRepository userRepository;
 
     @Override
-    public User authenticate(String userId, String pwd){
-        return userRepository.authenticate(userId, pwd).getID() > 0 ? userRepository.getUserByEmailId(userId) : null;
+    public User authenticate(String userId, String pwd){ 
+        return userRepository.authenticate(userId, pwd);
     }
 
     @Override
